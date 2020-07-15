@@ -1,3 +1,8 @@
-#!/bin/bash
-./pclmtoraster 1 1 1 1 "print-color-mode=Srgb" ./pclm/color.jpg-4x6-srgb-8-300dpi.pclm > ./raster/color.jpg-4x6-srgb-8-300dpi.pclm.pwg
-./pclmtoraster 1 1 1 1 "print-color-mode=Srgb" ./pclm/onepage-a4-srgb-8-300dpi.pclm > ./raster/onepage-a4-srgb-8-300dpi.pclm.pwg
+for pclm in pclms/*; do
+	for ppd in ppds/*; do
+		#echo "cupsfilter -o media=A4 -i application/PCLm -m application/vnd.cups-raster -P "$ppd" "$pclm" > rasters/"$(basename "$ppd" .ppd)"_"$(basename "$pclm")".pwg"
+		cupsfilter -o media=A4 -i application/PCLm -m application/vnd.cups-raster -P "$ppd" "$pclm" > rasters/"$(basename "$ppd" .ppd)"_"$(basename "$pclm")".pwg
+		# echo "cupsfilter -o media=A4 -i application/PCLm -m application/vnd.cups-raster -P $(basename "$ppd") $(basename "$pclm")"
+		# cupsfilter $(basename "$filename")
+	done
+done
